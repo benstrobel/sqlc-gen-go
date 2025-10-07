@@ -9,8 +9,14 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
-    - run: make
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+      - run: make
+      - run: GOOS=wasip1 GOARCH=wasm go build -o bin/sqlc-ensure-enum-types.wasm plugin/main.go
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqlc-gen-go-artifacts
+          path: |
+            bin/sqlc-ensure-enum-types.wasm
