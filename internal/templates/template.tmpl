@@ -141,6 +141,13 @@ func (ns Null{{.Name}}) AsPointer() (*{{.Name}}, error) {
 	return &ns.{{.Name}}, nil
 }
 
+func (e *{{.Name}}) FromPointer() Null{{.Name}} {
+	if e == nil {
+		return Null{{.Name}}{}
+	}
+	return Null{{.Name}}{ {{.Name}}: *e, Valid: true}
+}
+
 {{ if $.EmitEnumValidMethod }}
 func (e {{.Name}}) Valid() bool {
   switch e {
