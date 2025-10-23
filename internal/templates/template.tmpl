@@ -141,7 +141,7 @@ func (ns Null{{.Name}}) AsPointer() (*{{.Name}}, error) {
 	return &ns.{{.Name}}, nil
 }
 
-func (e *{{.Name}}) FromPointer() Null{{.Name}} {
+func Null{{.Name}}FromPointer(e *{{.Name}}) Null{{.Name}} {
 	if e == nil {
 		return Null{{.Name}}{}
 	}
