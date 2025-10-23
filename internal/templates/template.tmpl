@@ -131,11 +131,14 @@ func (ns Null{{.Name}}) Value() (driver.Value, error) {
 	return string(ns.{{.Name}}), nil
 }
 
-func (ns Null{{.Name}}) AsPointer() *{{.Name}} {
-	if !ns.Valid || !ns.{{.Name}}.Valid() {
-		return nil
+func (ns Null{{.Name}}) AsPointer() (*{{.Name}}, error) {
+	if !ns.Valid {
+		return nil, nil
 	}
-	return &ns.{{.Name}}
+	if !ns.{{.Name}}.Valid() {
+		return nil, fmt.Errorf("invalid value for {{.Name}}: '%s'", ns.{{.Name}})
+	}
+	return &ns.{{.Name}}, nil
 }
 
 {{ if $.EmitEnumValidMethod }}
